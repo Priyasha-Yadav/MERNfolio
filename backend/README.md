@@ -1,3 +1,4 @@
+```
 backend/
 │── config/                 # Configuration files (DB, Cloudinary, Firebase, etc.)
 │   ├── db.js               # MongoDB connection
@@ -25,3 +26,4 @@ backend/
 │── .gitignore              # Ignore sensitive files
 │── package.json            # Dependencies & scripts
 │── README.md               # Documentation
+```

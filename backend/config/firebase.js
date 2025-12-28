@@ -1,27 +1,26 @@
 import admin from "firebase-admin";
-import fs from "fs";
-import path from "path";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-// Get the Firebase private key JSON file path from the .env file
-const serviceAccountPath = path.resolve(process.env.FIREBASE_ADMIN_SDK_PATH);
+if (!admin.apps.length) {
+  if (
+    !process.env.FIREBASE_PROJECT_ID ||
+    !process.env.FIREBASE_CLIENT_EMAIL ||
+    !process.env.FIREBASE_PRIVATE_KEY
+  ) {
+    throw new Error("Firebase Admin environment variables are missing");
+  }
 
-// Check if the file exists before initializing Firebase
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error("⚠️ Firebase private key JSON file is missing!");
-  process.exit(1);
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    }),
+  });
+
+  console.log("🔥 Firebase Admin Initialized Successfully!");
 }
-
-// Read the JSON file and parse it
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
-
-// Initialize Firebase Admin with the service account credentials
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-console.log("🔥 Firebase Admin Initialized Successfully!");
 
 export default admin;
