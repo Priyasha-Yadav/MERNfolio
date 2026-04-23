@@ -18,12 +18,28 @@ const projectSchema = new mongoose.Schema({
   featured: { type: Boolean, default: false },
 });
 
-// Define the experience schema (work or education timeline)
+// Define the experience schema (work timeline)
 const experienceSchema = new mongoose.Schema({
   title: { type: String, required: true },
   company: { type: String, required: true },
   duration: { type: String, required: true },
   description: { type: String },
+});
+
+// Define the education schema
+const educationSchema = new mongoose.Schema({
+  degree: { type: String, required: true },
+  institution: { type: String, required: true },
+  duration: { type: String, required: true },
+  description: { type: String },
+});
+
+// Define the certification schema
+const certificationSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  issuer: { type: String, required: true },
+  date: { type: String },
+  link: { type: String },
 });
 
 // Define contact information schema
@@ -46,6 +62,8 @@ const portfolioSchema = new mongoose.Schema(
     skills: [skillSchema],
     projects: [projectSchema],
     experience: [experienceSchema],
+    education: [educationSchema],
+    certifications: [certificationSchema],
     contact: contactSchema,
     friendsReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
   },

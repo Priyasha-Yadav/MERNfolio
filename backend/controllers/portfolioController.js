@@ -412,3 +412,99 @@ export const updateContactInfo = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+// Add education
+export const addEducation = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { degree, institution, duration, description } = req.body;
+    let portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) {
+      portfolio = new Portfolio({ userId, skills: [], projects: [], experience: [], education: [], certifications: [] });
+    }
+    portfolio.education.push({ degree, institution, duration, description });
+    await portfolio.save();
+    res.status(200).json({ message: "Education added successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Update education
+export const updateEducation = async (req, res) => {
+  try {
+    const { userId, eduIndex } = req.params;
+    const { degree, institution, duration, description } = req.body;
+    const portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
+    if (eduIndex < 0 || eduIndex >= portfolio.education.length) return res.status(400).json({ message: "Invalid education index" });
+    portfolio.education[eduIndex] = { degree, institution, duration, description };
+    await portfolio.save();
+    res.status(200).json({ message: "Education updated successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Delete education
+export const deleteEducation = async (req, res) => {
+  try {
+    const { userId, eduIndex } = req.params;
+    const portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
+    if (eduIndex < 0 || eduIndex >= portfolio.education.length) return res.status(400).json({ message: "Invalid education index" });
+    portfolio.education.splice(eduIndex, 1);
+    await portfolio.save();
+    res.status(200).json({ message: "Education deleted successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Add certification
+export const addCertification = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { title, issuer, date, link } = req.body;
+    let portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) {
+      portfolio = new Portfolio({ userId, skills: [], projects: [], experience: [], education: [], certifications: [] });
+    }
+    portfolio.certifications.push({ title, issuer, date, link });
+    await portfolio.save();
+    res.status(200).json({ message: "Certification added successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Update certification
+export const updateCertification = async (req, res) => {
+  try {
+    const { userId, certIndex } = req.params;
+    const { title, issuer, date, link } = req.body;
+    const portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
+    if (certIndex < 0 || certIndex >= portfolio.certifications.length) return res.status(400).json({ message: "Invalid certification index" });
+    portfolio.certifications[certIndex] = { title, issuer, date, link };
+    await portfolio.save();
+    res.status(200).json({ message: "Certification updated successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// Delete certification
+export const deleteCertification = async (req, res) => {
+  try {
+    const { userId, certIndex } = req.params;
+    const portfolio = await Portfolio.findOne({ userId });
+    if (!portfolio) return res.status(404).json({ message: "Portfolio not found" });
+    if (certIndex < 0 || certIndex >= portfolio.certifications.length) return res.status(400).json({ message: "Invalid certification index" });
+    portfolio.certifications.splice(certIndex, 1);
+    await portfolio.save();
+    res.status(200).json({ message: "Certification deleted successfully", portfolio });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

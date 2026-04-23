@@ -2,7 +2,7 @@ import GamifiedSkills from '../GamifiedSkills';
 import Timeline from '../Timeline';
 import ContactSection from '../ContactSection';
 
-const MinimalTemplate = ({ portfolio, contactInfo, onSubmitContact }) => {
+const MinimalTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = [] }) => {
   return (
     <div className="max-w-3xl mx-auto px-6 py-20">
       {/* Header */}
@@ -101,6 +101,42 @@ const MinimalTemplate = ({ portfolio, contactInfo, onSubmitContact }) => {
         </section>
       )}
 
+      {/* Education */}
+      {portfolio.education?.length > 0 && (
+        <section className="mb-20">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-8">Education</h2>
+          <div className="space-y-6">
+            {portfolio.education.map((edu, i) => (
+              <div key={i} className="relative pl-6 border-l-2 border-blue-200 dark:border-blue-800">
+                <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-blue-500" />
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{edu.degree}</h3>
+                <p className="text-sm font-medium text-blue-600 dark:text-blue-400">{edu.institution}</p>
+                <p className="text-xs text-gray-400 mt-0.5 mb-2">{edu.duration}</p>
+                {edu.description && <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{edu.description}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Certifications */}
+      {portfolio.certifications?.length > 0 && (
+        <section className="mb-20">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-8">Certifications</h2>
+          <div className="space-y-3">
+            {portfolio.certifications.map((cert, i) => (
+              <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-violet-300 dark:hover:border-violet-700 transition-colors">
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white text-sm">{cert.title}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{cert.issuer}{cert.date ? ` — ${cert.date}` : ''}</p>
+                </div>
+                {cert.link && <a href={cert.link} target="_blank" rel="noopener noreferrer" className="text-xs text-violet-600 dark:text-violet-400 hover:underline flex-shrink-0">View →</a>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Contact */}
       <section id="contact" className="mb-16">
         <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-6">Get in Touch</h2>
@@ -112,6 +148,24 @@ const MinimalTemplate = ({ portfolio, contactInfo, onSubmitContact }) => {
           </a>
         </div>
       </section>
+
+      {/* Reviews */}
+      {reviews.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-8">Reviews</h2>
+          <div className="space-y-6">
+            {reviews.map((review, i) => (
+              <div key={i} className="p-6 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="flex gap-0.5 mb-2">
+                  {[1,2,3,4,5].map(s => <svg key={s} className={`w-4 h-4 ${s <= review.rating ? 'text-amber-400' : 'text-gray-200 dark:text-gray-700'}`} fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 italic mb-3">"{review.comment}"</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">— {review.reviewerName}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

@@ -11,6 +11,12 @@ import {
   addExperience,
   updateExperience,
   deleteExperience,
+  addEducation,
+  updateEducation,
+  deleteEducation,
+  addCertification,
+  updateCertification,
+  deleteCertification,
   fetchGitHubProjects,
   updateTheme,
   deletePortfolio,
@@ -37,6 +43,12 @@ router.delete("/:userId/projects/:projectIndex", verifyToken, deleteProject);
 router.post("/:userId/experience", verifyToken, addExperience);
 router.put("/:userId/experience/:experienceIndex", verifyToken, updateExperience);
 router.delete("/:userId/experience/:experienceIndex", verifyToken, deleteExperience);
+router.post("/:userId/education", verifyToken, addEducation);
+router.put("/:userId/education/:eduIndex", verifyToken, updateEducation);
+router.delete("/:userId/education/:eduIndex", verifyToken, deleteEducation);
+router.post("/:userId/certifications", verifyToken, addCertification);
+router.put("/:userId/certifications/:certIndex", verifyToken, updateCertification);
+router.delete("/:userId/certifications/:certIndex", verifyToken, deleteCertification);
 router.patch("/:userId/theme", verifyToken, updateTheme);
 router.put("/:userId/contact", verifyToken, updateContactInfo);
 router.delete("/:userId", verifyToken, deletePortfolio);

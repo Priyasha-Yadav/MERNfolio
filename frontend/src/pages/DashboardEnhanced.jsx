@@ -34,6 +34,10 @@ const DashboardEnhanced = () => {
   const [editingProject, setEditingProject] = useState(null);
   const [experience, setExperience] = useState({ title: '', company: '', duration: '', description: '' });
   const [editingExperience, setEditingExperience] = useState(null);
+  const [education, setEducation] = useState({ degree: '', institution: '', duration: '', description: '' });
+  const [editingEducation, setEditingEducation] = useState(null);
+  const [certification, setCertification] = useState({ title: '', issuer: '', date: '', link: '' });
+  const [editingCertification, setEditingCertification] = useState(null);
   const [githubUsername, setGithubUsername] = useState('');
   const [contactInfo, setContactInfo] = useState({
     email: '',
@@ -467,13 +471,15 @@ const DashboardEnhanced = () => {
 
         {/* Tabs */}
         <div className="flex gap-2 sm:gap-4 mb-8 border-b border-gray-200 dark:border-gray-700 overflow-x-auto" role="tablist">
-          {['about', 'contact', 'skills', 'projects', 'experience', 'template', 'github'].map((tab) => {
+          {['about', 'contact', 'skills', 'projects', 'experience', 'education', 'certifications', 'template', 'github'].map((tab) => {
             const tabLabels = {
               about: 'About',
               contact: 'Contact & Social',
               skills: 'Skills',
               projects: 'Projects',
               experience: 'Experience',
+              education: 'Education',
+              certifications: 'Certificates',
               template: 'Template',
               github: 'GitHub'
             };
@@ -962,6 +968,96 @@ const DashboardEnhanced = () => {
                   No experience added yet. Add your first experience above!
                 </p>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Education Tab */}
+        {activeTab === 'education' && (
+          <div className="card animate-slideInUp" role="tabpanel" id="education-panel">
+            <h2 className="text-2xl font-bold mb-4">{editingEducation !== null ? 'Edit Education' : 'Add Education'}</h2>
+            <FormField label="Degree / Course" name="eduDegree" value={education.degree} onChange={(e) => setEducation({ ...education, degree: e.target.value })} error={errors.eduDegree} touched={true} placeholder="e.g., B.Tech Computer Science" required />
+            <FormField label="Institution" name="eduInstitution" value={education.institution} onChange={(e) => setEducation({ ...education, institution: e.target.value })} error={errors.eduInstitution} touched={true} placeholder="e.g., IIT Delhi" required />
+            <FormField label="Duration" name="eduDuration" value={education.duration} onChange={(e) => setEducation({ ...education, duration: e.target.value })} error={errors.eduDuration} touched={true} placeholder="e.g., 2020 - 2024" required />
+            <FormField label="Description (optional)" name="eduDescription" type="textarea" value={education.description} onChange={(e) => setEducation({ ...education, description: e.target.value })} placeholder="CGPA, achievements, relevant coursework..." rows={3} />
+            <div className="flex gap-2 flex-wrap mt-4">
+              <button onClick={async () => {
+                if (!education.degree.trim() || !education.institution.trim() || !education.duration.trim()) { setErrors({ eduDegree: !education.degree.trim() ? 'Required' : '', eduInstitution: !education.institution.trim() ? 'Required' : '', eduDuration: !education.duration.trim() ? 'Required' : '' }); return; }
+                setIsSubmitting(true);
+                try {
+                  if (editingEducation !== null) { await portfolioAPI.updateEducation(user.uid, editingEducation, education); showSuccess('Education updated!'); }
+                  else { await portfolioAPI.addEducation(user.uid, education); showSuccess('Education added!'); }
+                  setEducation({ degree: '', institution: '', duration: '', description: '' }); setEditingEducation(null); setErrors({}); loadPortfolio();
+                } catch (e) { showError('Failed to save education.'); }
+                finally { setIsSubmitting(false); }
+              }} className="btn-primary" disabled={isSubmitting}>{isSubmitting ? 'Saving...' : editingEducation !== null ? 'Update Education' : 'Add Education'}</button>
+              {editingEducation !== null && <button onClick={() => { setEditingEducation(null); setEducation({ degree: '', institution: '', duration: '', description: '' }); setErrors({}); }} className="btn-secondary">Cancel</button>}
+            </div>
+
+            <div className="mt-8 space-y-4">
+              {portfolio?.education?.length > 0 ? portfolio.education.map((edu, i) => (
+                <div key={i} className="flex items-start justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{edu.degree}</h3>
+                    <p className="text-sm text-violet-600 dark:text-violet-400">{edu.institution}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{edu.duration}</p>
+                    {edu.description && <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{edu.description}</p>}
+                  </div>
+                  <div className="flex gap-2 flex-shrink-0">
+                    <button onClick={() => { setEditingEducation(i); setEducation({ degree: edu.degree, institution: edu.institution, duration: edu.duration, description: edu.description || '' }); }} className="text-blue-500 hover:text-blue-600 p-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" /></svg>
+                    </button>
+                    <button onClick={() => { setConfirmDialog({ isOpen: true, title: 'Delete Education', message: 'Delete this education entry?', onConfirm: async () => { try { await portfolioAPI.deleteEducation(user.uid, i); showSuccess('Deleted!'); loadPortfolio(); } catch (e) { showError('Failed to delete.'); } } }); }} className="text-red-500 hover:text-red-600 p-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                    </button>
+                  </div>
+                </div>
+              )) : <p className="text-gray-500 dark:text-gray-400 text-center py-8">No education added yet.</p>}
+            </div>
+          </div>
+        )}
+
+        {/* Certifications Tab */}
+        {activeTab === 'certifications' && (
+          <div className="card animate-slideInUp" role="tabpanel" id="certifications-panel">
+            <h2 className="text-2xl font-bold mb-4">{editingCertification !== null ? 'Edit Certificate' : 'Add Certificate'}</h2>
+            <FormField label="Certificate Title" name="certTitle" value={certification.title} onChange={(e) => setCertification({ ...certification, title: e.target.value })} error={errors.certTitle} touched={true} placeholder="e.g., AWS Solutions Architect" required />
+            <FormField label="Issuing Organization" name="certIssuer" value={certification.issuer} onChange={(e) => setCertification({ ...certification, issuer: e.target.value })} error={errors.certIssuer} touched={true} placeholder="e.g., Amazon Web Services" required />
+            <FormField label="Date" name="certDate" value={certification.date} onChange={(e) => setCertification({ ...certification, date: e.target.value })} placeholder="e.g., March 2024" />
+            <FormField label="Credential Link (optional)" name="certLink" value={certification.link} onChange={(e) => setCertification({ ...certification, link: e.target.value })} placeholder="https://verify.cert.com/..." />
+            <div className="flex gap-2 flex-wrap mt-4">
+              <button onClick={async () => {
+                if (!certification.title.trim() || !certification.issuer.trim()) { setErrors({ certTitle: !certification.title.trim() ? 'Required' : '', certIssuer: !certification.issuer.trim() ? 'Required' : '' }); return; }
+                setIsSubmitting(true);
+                try {
+                  if (editingCertification !== null) { await portfolioAPI.updateCertification(user.uid, editingCertification, certification); showSuccess('Certificate updated!'); }
+                  else { await portfolioAPI.addCertification(user.uid, certification); showSuccess('Certificate added!'); }
+                  setCertification({ title: '', issuer: '', date: '', link: '' }); setEditingCertification(null); setErrors({}); loadPortfolio();
+                } catch (e) { showError('Failed to save certificate.'); }
+                finally { setIsSubmitting(false); }
+              }} className="btn-primary" disabled={isSubmitting}>{isSubmitting ? 'Saving...' : editingCertification !== null ? 'Update Certificate' : 'Add Certificate'}</button>
+              {editingCertification !== null && <button onClick={() => { setEditingCertification(null); setCertification({ title: '', issuer: '', date: '', link: '' }); setErrors({}); }} className="btn-secondary">Cancel</button>}
+            </div>
+
+            <div className="mt-8 space-y-4">
+              {portfolio?.certifications?.length > 0 ? portfolio.certifications.map((cert, i) => (
+                <div key={i} className="flex items-start justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 dark:text-white">{cert.title}</h3>
+                    <p className="text-sm text-violet-600 dark:text-violet-400">{cert.issuer}</p>
+                    {cert.date && <p className="text-xs text-gray-500 dark:text-gray-400">{cert.date}</p>}
+                    {cert.link && <a href={cert.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline mt-1 inline-block">View Credential →</a>}
+                  </div>
+                  <div className="flex gap-2 flex-shrink-0">
+                    <button onClick={() => { setEditingCertification(i); setCertification({ title: cert.title, issuer: cert.issuer, date: cert.date || '', link: cert.link || '' }); }} className="text-blue-500 hover:text-blue-600 p-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" /></svg>
+                    </button>
+                    <button onClick={() => { setConfirmDialog({ isOpen: true, title: 'Delete Certificate', message: 'Delete this certificate?', onConfirm: async () => { try { await portfolioAPI.deleteCertification(user.uid, i); showSuccess('Deleted!'); loadPortfolio(); } catch (e) { showError('Failed to delete.'); } } }); }} className="text-red-500 hover:text-red-600 p-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                    </button>
+                  </div>
+                </div>
+              )) : <p className="text-gray-500 dark:text-gray-400 text-center py-8">No certificates added yet.</p>}
             </div>
           </div>
         )}
