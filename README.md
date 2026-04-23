@@ -4,23 +4,22 @@
 
 ## 🔗 Key Links
 
-- **Prototype**: [Figma Prototype](#)
-- **Node Server**: [Backend](#)
-- **Frontend**: [Frontend](#)
-- **Backend Repo**: [GitHub - Backend](#)
-- **Frontend Repo**: [GitHub - Frontend](#)
+- **Node Server**: [Backend](https://mernfolio-7in4.onrender.com)
+- **Frontend**: [Frontend](https://mernfolio-delta.vercel.app/)
+- **Backend Repo**: [GitHub - Backend](https://github.com/Priyasha-Yadav/MERNfolio/tree/main/backend)
+- **Frontend Repo**: [GitHub - Frontend](https://github.com/Priyasha-Yadav/MERNfolio/tree/main/frontend)
 
-## 🌟 Key Features  
+## 🗝️ Key Features  
 
 | **Feature**                        | **Description**                                                                 |
 |------------------------------------|---------------------------------------------------------------------------------|
-| 🎨 **Customizable Themes & Dark Mode** | Choose from multiple themes and toggle between light and dark modes to suit your preference. |
+| **Customizable Themes & Dark Mode** | Choose from multiple themes and toggle between light and dark modes to suit your preference. |
 | 🔗 **Projects Showcase**            | Fetch project details dynamically via the GitHub API or manually add images, descriptions, and links. |
-| 🏆 **Gamified XP-Based Skills**    | Display your skills with progress bars and experience points, making the portfolio more interactive. |
-| 📜 **Interactive Timeline**        | Animated timeline that showcases your education, work experience, and certifications, triggered by scroll. |
-| 💬 **Friends' Reviews**            | Add a section for visitors to leave testimonials and feedback on your work. |
-| 📌 **Profile Switch Mode**         | Toggle between viewing your personal portfolio or shared profiles with a simple button. |
-| ✍️ **Blogs & Articles** (Optional) | Share your journey, write about GitHub contributions, technical topics, or personal experiences. |
+| **Gamified XP-Based Skills**    | Display your skills with progress bars and experience points, making the portfolio more interactive. |
+| **Interactive Timeline**        | Animated timeline that showcases your education, work experience, and certifications, triggered by scroll. |
+| **Friends' Reviews**            | Add a section for visitors to leave testimonials and feedback on your work. |
+| **Profile Switch Mode**         | Toggle between viewing your personal portfolio or shared profiles with a simple button. |
+| **Blogs & Articles** (Optional) | Share your journey, write about GitHub contributions, technical topics, or personal experiences. |
 
 ## 🛠️ Tech Stack  
 
@@ -39,7 +38,7 @@ The project is built using the **MERN stack**, which stands for MongoDB, Express
   - **Frontend**: Deployed on **Netlify** or **Vercel** for fast, serverless deployment.  
   - **Backend**: Deployed on **Render** or **Fly.io** for easy server deployment.
 
-## 🚀 Installation & Setup  
+## Installation & Setup  
 
 To run **MERNfolio** locally and start customizing your portfolio:
 
@@ -65,7 +64,7 @@ To run **MERNfolio** locally and start customizing your portfolio:
 
 **Note:** Ensure that you have **Node.js** installed (preferably version 14.x or above). You may need to set up your **MongoDB** database and authentication (e.g., Firebase, OAuth) depending on the features you wish to use.
 
-## 🎯 Contributing  
+## Contributing  
 
 We welcome contributions! To contribute to **MERNfolio**, follow these steps:
 
@@ -81,6 +80,6 @@ We welcome contributions! To contribute to **MERNfolio**, follow these steps:
     ```
 5. **Open a pull request (PR)** for review.
 
-## 📜 License
+## License
 
 This project is open-source and licensed under the **MIT License**. See the [LICENSE](https://github.com/Priyasha-Yadav/MERNfolio/blob/main/LICENSE) file for more information.

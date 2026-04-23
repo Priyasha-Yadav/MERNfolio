@@ -22,13 +22,14 @@ export const getPortfolio = async (req, res) => {
 export const createOrUpdatePortfolio = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { theme, about, skills, projects, experience, contact } = req.body;
+    const { theme, template, about, skills, projects, experience, contact } = req.body;
 
     let portfolio = await Portfolio.findOne({ userId });
 
     if (portfolio) {
       // Update existing portfolio
       portfolio.theme = theme || portfolio.theme;
+      portfolio.template = template || portfolio.template;
       portfolio.about = about || portfolio.about;
       portfolio.skills = skills || portfolio.skills;
       portfolio.projects = projects || portfolio.projects;

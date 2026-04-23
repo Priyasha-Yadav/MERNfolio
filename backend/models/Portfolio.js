@@ -41,6 +41,7 @@ const portfolioSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true }, // Firebase UID (string)
     theme: { type: String, enum: ["dark", "light"], default: "light" },
+    template: { type: String, enum: ["modern", "minimal", "developer"], default: "modern" },
     about: { type: String, default: "" },
     skills: [skillSchema],
     projects: [projectSchema],

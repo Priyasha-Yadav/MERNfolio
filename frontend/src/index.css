@@ -5,7 +5,11 @@
 @tailwind utilities;
 
 @layer base {
-  /* Your custom base styles */
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 @layer base {

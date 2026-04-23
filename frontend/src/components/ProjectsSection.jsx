@@ -68,8 +68,8 @@ const ProjectsSection = ({ projects = [], onViewProject }) => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold mb-4 gradient-text">
-            Featured Projects 🚀
+          <h2 className="text-4xl font-bold mb-4 gradient-text" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
+            Featured Projects
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Explore my latest work and creative solutions
@@ -238,9 +238,11 @@ const ProjectsSection = ({ projects = [], onViewProject }) => {
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold mb-2">No projects found</h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">No projects found</h3>
+            <p className="text-gray-500 dark:text-gray-400">
               Try adjusting your search or filter criteria
             </p>
           </motion.div>

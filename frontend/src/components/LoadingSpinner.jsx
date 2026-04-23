@@ -10,7 +10,9 @@ const LoadingSpinner = ({ size = 'md', fullScreen = false, message = 'Loading...
       <div className="relative">
         <div className={`spinner ${sizes[size]} animate-glow`}></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl animate-pulse">🚀</span>
+          <svg className="w-5 h-5 text-violet-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          </svg>
         </div>
       </div>
       {message && (
@@ -30,7 +32,7 @@ const LoadingSpinner = ({ size = 'md', fullScreen = false, message = 'Loading...
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-gradient-to-br from-gray-50 via-white to-violet-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 flex items-center justify-center z-50">
         {spinner}
       </div>
     );
