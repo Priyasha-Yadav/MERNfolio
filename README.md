@@ -8,6 +8,7 @@
 - **Frontend**: [Frontend](https://mernfolio-delta.vercel.app/)
 - **Backend Repo**: [GitHub - Backend](https://github.com/Priyasha-Yadav/MERNfolio/tree/main/backend)
 - **Frontend Repo**: [GitHub - Frontend](https://github.com/Priyasha-Yadav/MERNfolio/tree/main/frontend)
+- **API Documentation**: [Postman](https://documenter.getpostman.com/view/39189648/2sBXqFMNHb)
 
 ## 🗝️ Key Features  
 
@@ -18,8 +19,6 @@
 | **Gamified XP-Based Skills**    | Display your skills with progress bars and experience points, making the portfolio more interactive. |
 | **Interactive Timeline**        | Animated timeline that showcases your education, work experience, and certifications, triggered by scroll. |
 | **Friends' Reviews**            | Add a section for visitors to leave testimonials and feedback on your work. |
-| **Profile Switch Mode**         | Toggle between viewing your personal portfolio or shared profiles with a simple button. |
-| **Blogs & Articles** (Optional) | Share your journey, write about GitHub contributions, technical topics, or personal experiences. |
 
 ## 🛠️ Tech Stack  
 

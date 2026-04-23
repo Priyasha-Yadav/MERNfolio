@@ -48,6 +48,12 @@ const PortfolioView = () => {
     await portfolioAPI.submitContactForm(userId, contactData);
   };
 
+  const handleAddReview = async (reviewData) => {
+    if (!portfolio?._id) return;
+    const res = await reviewAPI.addReview(portfolio._id, reviewData);
+    setReviews((prev) => [res.data.review, ...prev]);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
@@ -83,7 +89,7 @@ const PortfolioView = () => {
   const template = portfolio.template || 'modern';
   const showNavbar = template !== 'developer';
 
-  const templateProps = { portfolio, contactInfo, onSubmitContact: handleContactSubmit, reviews };
+  const templateProps = { portfolio, contactInfo, onSubmitContact: handleContactSubmit, reviews, onAddReview: handleAddReview, portfolioId: portfolio._id };
   const Template = templateLoaders[template] || templateLoaders.modern;
 
   return (
