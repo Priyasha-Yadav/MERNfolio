@@ -28,6 +28,9 @@ const DashboardEnhanced = () => {
   
   // Form states
   const [about, setAbout] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [tagline, setTagline] = useState('');
+  const [profileImage, setProfileImage] = useState('');
   const [skill, setSkill] = useState({ name: '', level: 50 });
   const [editingSkill, setEditingSkill] = useState(null);
   const [project, setProject] = useState({ title: '', description: '', repoLink: '', liveDemo: '', image: '' });
@@ -63,6 +66,9 @@ const DashboardEnhanced = () => {
       const response = await portfolioAPI.getPortfolio(user.uid);
       setPortfolio(response.data);
       setAbout(response.data.about || '');
+      setDisplayName(response.data.displayName || '');
+      setTagline(response.data.tagline || '');
+      setProfileImage(response.data.profileImage || '');
       if (response.data.contact) {
         setContactInfo({
           email: response.data.contact.email || user?.email || '',
@@ -161,7 +167,7 @@ const DashboardEnhanced = () => {
     
     setIsSubmitting(true);
     try {
-      await portfolioAPI.createOrUpdatePortfolio(user.uid, { about });
+      await portfolioAPI.createOrUpdatePortfolio(user.uid, { about, displayName, tagline, profileImage });
       showSuccess('About section updated successfully!');
       loadPortfolio();
     } catch (error) {
@@ -432,7 +438,7 @@ const DashboardEnhanced = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar />
       
       {/* Toast Notifications */}
@@ -470,45 +476,80 @@ const DashboardEnhanced = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 sm:gap-4 mb-8 border-b border-gray-200 dark:border-gray-700 overflow-x-auto" role="tablist">
-          {['about', 'contact', 'skills', 'projects', 'experience', 'education', 'certifications', 'template', 'github'].map((tab) => {
-            const tabLabels = {
-              about: 'About',
-              contact: 'Contact & Social',
-              skills: 'Skills',
-              projects: 'Projects',
-              experience: 'Experience',
-              education: 'Education',
-              certifications: 'Certificates',
-              template: 'Template',
-              github: 'GitHub'
-            };
-            return (
-              <button
-                key={tab}
-                onClick={() => {
-                  setActiveTab(tab);
-                  setErrors({});
-                }}
-                role="tab"
-                aria-selected={activeTab === tab}
-                aria-controls={`${tab}-panel`}
-                className={`tab-button whitespace-nowrap ${
-                  activeTab === tab
-                    ? 'tab-button-active'
-                    : 'tab-button-inactive'
-                }`}
-              >
-                {tabLabels[tab]}
-              </button>
-            );
-          })}
+        <div className="mb-8 -mx-4 sm:mx-0">
+          <div className="flex gap-1.5 px-4 sm:px-0 pb-3 overflow-x-auto dashboard-tabs" role="tablist">
+            {['about', 'contact', 'skills', 'projects', 'experience', 'education', 'certifications', 'template', 'github'].map((tab) => {
+              const tabLabels = {
+                about: 'About',
+                contact: 'Contact',
+                skills: 'Skills',
+                projects: 'Projects',
+                experience: 'Experience',
+                education: 'Education',
+                certifications: 'Certs',
+                template: 'Template',
+                github: 'GitHub'
+              };
+              return (
+                <button
+                  key={tab}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setErrors({});
+                  }}
+                  role="tab"
+                  aria-selected={activeTab === tab}
+                  aria-controls={`${tab}-panel`}
+                  className={`tab-button whitespace-nowrap text-sm ${
+                    activeTab === tab
+                      ? 'tab-button-active'
+                      : 'tab-button-inactive'
+                  }`}
+                >
+                  {tabLabels[tab]}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* About Tab */}
         {activeTab === 'about' && (
           <div className="card animate-slideInUp" role="tabpanel" id="about-panel">
-            <h2 className="text-2xl font-bold mb-4">About Me</h2>
+            <h2 className="text-2xl font-bold mb-2">Profile & About</h2>
+            <p className="theme-text-muted text-sm mb-6">Personalize your portfolio with your name, photo, and bio.</p>
+
+            {/* Profile image preview */}
+            {profileImage && (
+              <div className="flex justify-center mb-6">
+                <img src={profileImage} alt="Profile preview" className="w-24 h-24 rounded-2xl object-cover shadow-lg border-2" style={{borderColor: 'rgba(128,128,128,0.2)'}} />
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <FormField
+                label="Display Name"
+                name="displayName"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="e.g., John Doe"
+              />
+              <FormField
+                label="Tagline / Title"
+                name="tagline"
+                value={tagline}
+                onChange={(e) => setTagline(e.target.value)}
+                placeholder="e.g., Full Stack Developer"
+              />
+            </div>
+            <FormField
+              label="Profile Image URL"
+              name="profileImage"
+              type="url"
+              value={profileImage}
+              onChange={(e) => setProfileImage(e.target.value)}
+              placeholder="https://example.com/photo.jpg"
+            />
             <FormField
               label="About"
               name="about"
@@ -525,7 +566,7 @@ const DashboardEnhanced = () => {
               className="btn-primary mt-4"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Saving...' : 'Save About'}
+              {isSubmitting ? 'Saving...' : 'Save Profile'}
             </button>
           </div>
         )}

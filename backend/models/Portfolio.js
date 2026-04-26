@@ -56,6 +56,9 @@ const contactSchema = new mongoose.Schema({
 const portfolioSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true }, // Firebase UID (string)
+    displayName: { type: String, default: "" },
+    tagline: { type: String, default: "" },
+    profileImage: { type: String, default: "" }, // URL to profile photo
     theme: { type: String, enum: ["dark", "light"], default: "light" },
     template: { type: String, enum: ["modern", "minimal", "developer"], default: "modern" },
     about: { type: String, default: "" },

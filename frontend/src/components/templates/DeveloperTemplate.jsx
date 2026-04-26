@@ -1,7 +1,10 @@
 import FriendsReviews from '../FriendsReviews';
 
-const DeveloperTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = [], onAddReview, portfolioId }) => {
+const DeveloperTemplate = ({ portfolio, contactInfo, profileInfo = {}, onSubmitContact, reviews = [], onAddReview, portfolioId }) => {
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const name = profileInfo.displayName || 'Developer';
+  const tagline = profileInfo.tagline || 'Software Engineer';
+  const avatar = profileInfo.profileImage;
 
   return (
     <div className="bg-gray-950 text-gray-100 min-h-screen font-mono">
@@ -14,7 +17,7 @@ const DeveloperTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = 
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
               <div className="w-3 h-3 rounded-full bg-green-500" />
             </div>
-            <span className="text-xs text-gray-500 ml-2">portfolio.sh</span>
+            <span className="text-xs text-gray-500 ml-2">{name.toLowerCase().replace(/\s+/g, '_')}_portfolio.sh</span>
           </div>
           <div className="flex gap-4 text-xs">
             {['skills', 'projects', 'experience', 'contact'].map(s => (
@@ -28,9 +31,23 @@ const DeveloperTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = 
         {/* Hero */}
         <section className="animate-fadeIn">
           <p className="text-green-400 mb-2 text-sm">$ whoami</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4" style={{fontFamily: "'Space Grotesk', monospace"}}>
-            Developer Portfolio
-          </h1>
+          <div className="flex items-center gap-6 mb-6">
+            {avatar && (
+              <img
+                src={avatar}
+                alt={name}
+                className="w-20 h-20 rounded-xl object-cover border-2 border-green-500/30 shadow-lg shadow-green-500/10"
+              />
+            )}
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-bold text-white mb-1" style={{fontFamily: "'Space Grotesk', monospace"}}>
+                {name}
+              </h1>
+              {tagline && (
+                <p className="text-cyan-400 text-sm">{tagline}</p>
+              )}
+            </div>
+          </div>
           {portfolio.about && (
             <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
               <p className="text-gray-300 leading-relaxed text-sm"><span className="text-cyan-400">/** </span>{portfolio.about}<span className="text-cyan-400"> */</span></p>

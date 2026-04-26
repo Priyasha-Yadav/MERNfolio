@@ -4,25 +4,43 @@ import ProjectsSection from '../ProjectsSection';
 import ContactSection from '../ContactSection';
 import FriendsReviews from '../FriendsReviews';
 
-const ModernTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = [], onAddReview, portfolioId }) => {
+const ModernTemplate = ({ portfolio, contactInfo, profileInfo = {}, onSubmitContact, reviews = [], onAddReview, portfolioId }) => {
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const name = profileInfo.displayName || 'My Portfolio';
+  const tagline = profileInfo.tagline || '';
+  const avatar = profileInfo.profileImage;
 
   return (
     <>
-      {/* Hero section */}
+      {/* Hero section — full-width gradient with user identity */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-600 via-purple-600 to-pink-500" />
         <div className="absolute inset-0 opacity-20" style={{backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, transparent 50%)'}} />
         <div className="relative max-w-6xl mx-auto px-6 py-28 text-center text-white">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm mb-8 animate-fadeIn">
+          {/* Profile image */}
+          {avatar && (
+            <div className="flex justify-center mb-8 animate-fadeIn">
+              <img
+                src={avatar}
+                alt={name}
+                className="w-28 h-28 rounded-3xl object-cover shadow-2xl border-4 border-white/20 hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          )}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm mb-6 animate-fadeIn">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             Available for opportunities
           </div>
-          <h1 className="text-5xl sm:text-7xl font-extrabold mb-6 animate-slideInDown" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
-            {portfolio.about ? portfolio.about.split('.')[0] : 'Welcome to My Portfolio'}
+          <h1 className="text-5xl sm:text-7xl font-extrabold mb-4 animate-slideInDown" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
+            {name}
           </h1>
-          <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto animate-fadeIn" style={{animationDelay: '0.3s'}}>
-            {portfolio.about ? portfolio.about.split('.').slice(1, 3).join('.').trim() : 'Explore my work and skills'}
+          {tagline && (
+            <p className="text-xl sm:text-2xl text-white/80 mb-4 font-medium animate-fadeIn" style={{animationDelay: '0.2s'}}>
+              {tagline}
+            </p>
+          )}
+          <p className="text-base text-white/60 mb-10 max-w-2xl mx-auto animate-fadeIn leading-relaxed" style={{animationDelay: '0.3s'}}>
+            {portfolio.about ? portfolio.about.split('.').slice(0, 2).join('.').trim() : 'Explore my work and skills'}
           </p>
           <div className="flex justify-center gap-4 animate-fadeIn" style={{animationDelay: '0.5s'}}>
             <button onClick={() => scrollTo('projects')} className="px-8 py-3.5 bg-white text-violet-700 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">View Projects</button>
@@ -113,6 +131,11 @@ const ModernTemplate = ({ portfolio, contactInfo, onSubmitContact, reviews = [],
           portfolioId={portfolioId}
         />
       </div>
+
+      {/* Footer */}
+      <footer className="py-8 text-center border-t border-gray-200 dark:border-gray-800">
+        <p className="text-xs text-gray-400">Built with MERNfolio</p>
+      </footer>
     </>
   );
 };

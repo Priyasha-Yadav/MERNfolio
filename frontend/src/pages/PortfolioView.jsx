@@ -1,8 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { portfolioAPI, reviewAPI } from '../utils/api';
-import Navbar from '../components/Navbar';
 import FloatingActionButton from '../components/FloatingActionButton';
 
 const templateLoaders = {
@@ -75,7 +74,8 @@ const PortfolioView = () => {
             </svg>
           </div>
           <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Portfolio Not Found</h2>
-          <p className="text-gray-500 dark:text-gray-400">This user hasn't created a portfolio yet.</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-6">This user hasn't created a portfolio yet.</p>
+          <Link to="/" className="text-sm font-semibold text-violet-600 hover:underline">← Back to MERNfolio</Link>
         </div>
       </div>
     );
@@ -86,25 +86,46 @@ const PortfolioView = () => {
     email: portfolio.contact?.email || (user?.uid === userId ? user?.email : '') || ''
   };
 
-  const template = portfolio.template || 'modern';
-  const showNavbar = template !== 'developer';
+  const profileInfo = {
+    displayName: portfolio.displayName || '',
+    tagline: portfolio.tagline || '',
+    profileImage: portfolio.profileImage || '',
+  };
 
-  const templateProps = { portfolio, contactInfo, onSubmitContact: handleContactSubmit, reviews, onAddReview: handleAddReview, portfolioId: portfolio._id };
+  const template = portfolio.template || 'modern';
+  const isOwner = user?.uid === userId;
+
+  const templateProps = {
+    portfolio,
+    contactInfo,
+    profileInfo,
+    onSubmitContact: handleContactSubmit,
+    reviews,
+    onAddReview: handleAddReview,
+    portfolioId: portfolio._id,
+    isOwner,
+  };
   const Template = templateLoaders[template] || templateLoaders.modern;
 
   return (
     <div className={`min-h-screen ${template === 'developer' ? 'bg-gray-950' : 'bg-gray-50 dark:bg-gray-900'}`}>
-      {showNavbar && <Navbar />}
+      {/* No MERNfolio navbar — this is the user's own portfolio page */}
 
       <Suspense fallback={<TemplateFallback />}>
         <Template {...templateProps} />
       </Suspense>
 
-      {template !== 'developer' && (
-        <FloatingActionButton
-          onScrollToProjects={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-          onScrollToContact={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-        />
+      {/* Floating edit button for the portfolio owner */}
+      {isOwner && (
+        <Link
+          to="/dashboard"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 gradient-bg rounded-2xl flex items-center justify-center text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300"
+          title="Edit Portfolio"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+          </svg>
+        </Link>
       )}
     </div>
   );

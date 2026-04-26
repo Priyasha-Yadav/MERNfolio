@@ -2,45 +2,36 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 
-const FeatureIcon = ({ children, className = '' }) => (
-  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${className}`}>
-    {children}
-  </div>
-);
-
 const Home = () => {
   const { user } = useAuth();
 
   const heroFeatures = [
     {
+      iconClass: 'theme-icon-1',
       icon: (
-        <FeatureIcon className="bg-gradient-to-br from-violet-500/10 to-violet-500/5 border border-violet-500/20">
-          <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
-          </svg>
-        </FeatureIcon>
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
+        </svg>
       ),
       title: 'Multiple Themes',
       desc: 'Six curated themes with unique gradients, colors, and dark mode support'
     },
     {
+      iconClass: 'theme-icon-2',
       icon: (
-        <FeatureIcon className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20">
-          <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-          </svg>
-        </FeatureIcon>
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        </svg>
       ),
       title: 'Gamified Skills',
       desc: 'XP system with levels, progress bars, and achievement badges'
     },
     {
+      iconClass: 'theme-icon-3',
       icon: (
-        <FeatureIcon className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20">
-          <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </FeatureIcon>
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
       ),
       title: 'Interactive Timeline',
       desc: 'Scroll-triggered animations with experience & education history'
@@ -105,34 +96,33 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-violet-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="min-h-screen page-bg overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section */}
       <section className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        {/* Ambient background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-violet-400/10 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-pink-400/10 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-400/5 rounded-full blur-3xl" />
+        {/* Ambient background blobs - theme-aware */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-3xl animate-float gradient-bg opacity-10" />
+          <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full blur-3xl animate-float gradient-bg opacity-10" style={{animationDelay: '3s'}} />
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-violet-100 dark:bg-violet-900/30 border border-violet-200 dark:border-violet-800 rounded-full text-sm font-medium text-violet-700 dark:text-violet-300 mb-8 animate-fadeIn">
-            <div className="w-2 h-2 bg-violet-500 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 theme-badge border rounded-full text-sm font-medium mb-8 animate-fadeIn">
+            <div className="w-2 h-2 theme-dot rounded-full animate-pulse" />
             Open-source MERN Portfolio Builder
           </div>
 
           <h1 className="text-6xl sm:text-7xl font-extrabold mb-6 tracking-tight animate-slideInDown" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
-            <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
+            <span className="gradient-text">
               MERNfolio
             </span>
           </h1>
-          <p className="text-2xl sm:text-3xl font-medium text-gray-700 dark:text-gray-200 mb-4 animate-slideInUp" style={{animationDelay: '0.2s'}}>
+          <p className="text-2xl sm:text-3xl font-medium theme-heading mb-4 animate-slideInUp" style={{animationDelay: '0.2s'}}>
             Build Your Professional Portfolio
           </p>
-          <p className="text-lg text-gray-500 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed animate-fadeIn" style={{animationDelay: '0.4s'}}>
+          <p className="text-lg theme-text mb-10 max-w-2xl mx-auto leading-relaxed animate-fadeIn" style={{animationDelay: '0.4s'}}>
             Create stunning developer portfolios with gamified skills, interactive
             timelines, multiple themes, and seamless GitHub integration.
           </p>
@@ -142,7 +132,7 @@ const Home = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="group relative px-8 py-3.5 text-white font-semibold bg-gradient-to-r from-violet-600 to-pink-500 rounded-xl shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="group relative px-8 py-3.5 text-white font-semibold rounded-xl theme-cta transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Dashboard
@@ -153,7 +143,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to={`/portfolio/${user.uid}`}
-                  className="px-8 py-3.5 font-semibold border-2 border-violet-300 dark:border-violet-700 text-violet-700 dark:text-violet-300 rounded-xl hover:bg-violet-50 dark:hover:bg-violet-900/20 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="px-8 py-3.5 font-semibold border-2 theme-btn-outline rounded-xl transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   My Portfolio
                 </Link>
@@ -162,7 +152,7 @@ const Home = () => {
               <>
                 <Link
                   to="/login"
-                  className="group relative px-8 py-3.5 text-white font-semibold bg-gradient-to-r from-violet-600 to-pink-500 rounded-xl shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="group relative px-8 py-3.5 text-white font-semibold rounded-xl theme-cta transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Get Started
@@ -173,7 +163,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to="/login"
-                  className="px-8 py-3.5 font-semibold border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="px-8 py-3.5 font-semibold border-2 theme-btn-outline rounded-xl transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   Sign In
                 </Link>
@@ -189,9 +179,11 @@ const Home = () => {
                 className="card hover-lift animate-fadeIn text-left"
                 style={{animationDelay: `${0.8 + index * 0.15}s`}}
               >
-                {feature.icon}
-                <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">{feature.title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 ${feature.iconClass}`}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-bold mb-2 theme-heading">{feature.title}</h3>
+                <p className="text-sm theme-text leading-relaxed">
                   {feature.desc}
                 </p>
               </div>
@@ -201,13 +193,13 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-white/50 dark:bg-gray-800/30 border-t border-gray-200/50 dark:border-gray-700/30">
+      <section className="py-24 theme-section-bg border-t border-b">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
+            <h2 className="text-4xl font-bold mb-4 theme-heading" style={{fontFamily: "'Space Grotesk', sans-serif"}}>
               Everything You Need
             </h2>
-            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+            <p className="text-lg theme-text max-w-xl mx-auto">
               A complete toolkit to build and share your developer portfolio
             </p>
           </div>
@@ -215,13 +207,13 @@ const Home = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group p-6 rounded-2xl border border-gray-200/60 dark:border-gray-700/40 hover:border-violet-300 dark:hover:border-violet-700 bg-white/60 dark:bg-gray-800/40 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/5 hover:-translate-y-1"
+                className="group card theme-card-border hover:-translate-y-1"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/10 to-pink-500/10 border border-violet-500/20 flex items-center justify-center mb-4 text-violet-600 dark:text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mb-4 text-white group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-base font-bold mb-1.5 text-gray-900 dark:text-white">{feature.title}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{feature.desc}</p>
+                <h3 className="text-base font-bold mb-1.5 theme-heading">{feature.title}</h3>
+                <p className="text-sm theme-text">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -229,9 +221,9 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-gray-200/50 dark:border-gray-700/30">
+      <footer className="py-8 border-t" style={{borderColor: 'inherit'}}>
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-sm text-gray-400 dark:text-gray-500">
+          <p className="text-sm theme-text-muted">
             Built with React, Node.js, Express & MongoDB
           </p>
         </div>

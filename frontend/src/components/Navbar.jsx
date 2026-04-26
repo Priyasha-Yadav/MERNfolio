@@ -21,7 +21,7 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-40">
+    <nav className="glass-effect sticky top-0 z-40 border-b" style={{borderColor: 'rgba(128,128,128,0.15)'}}>
       <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -29,12 +29,12 @@ const Navbar = () => {
             to="/"
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-9 h-9 bg-gradient-to-br from-violet-600 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-all duration-300 group-hover:scale-105">
+            <div className="w-9 h-9 gradient-bg rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-all duration-300">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-violet-600 to-pink-500 bg-clip-text text-transparent">
+            <span className="text-xl font-bold tracking-tight gradient-text">
               MERNfolio
             </span>
           </Link>
@@ -49,8 +49,8 @@ const Navbar = () => {
                   to="/dashboard"
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive('/dashboard')
-                      ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'tab-button-active'
+                      : 'theme-text hover:scale-105'
                   }`}
                 >
                   Dashboard
@@ -59,15 +59,15 @@ const Navbar = () => {
                   to={`/portfolio/${user.uid}`}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     location.pathname.includes('/portfolio/')
-                      ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'tab-button-active'
+                      : 'theme-text hover:scale-105'
                   }`}
                 >
                   My Portfolio
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="ml-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-pink-500 rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="ml-2 px-5 py-2 text-sm font-semibold text-white gradient-bg rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   Sign Out
                 </button>
@@ -75,7 +75,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="ml-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-pink-500 rounded-xl hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
+                className="ml-2 px-5 py-2 text-sm font-semibold text-white gradient-bg rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 Get Started
               </Link>
@@ -87,7 +87,7 @@ const Navbar = () => {
             <ThemeSelector />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-xl theme-text transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
@@ -105,20 +105,20 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 border-t border-gray-200/50 dark:border-gray-700/50 mt-3 space-y-1 animate-slideInDown">
+          <div className="md:hidden pt-4 pb-2 mt-3 space-y-1 animate-slideInDown" style={{borderTop: '1px solid rgba(128,128,128,0.15)'}}>
             {user ? (
               <>
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="block px-4 py-2.5 rounded-xl text-sm font-medium theme-text transition-colors"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to={`/portfolio/${user.uid}`}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="block px-4 py-2.5 rounded-xl text-sm font-medium theme-text transition-colors"
                 >
                   My Portfolio
                 </Link>
@@ -133,7 +133,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-center text-white bg-gradient-to-r from-violet-600 to-pink-500"
+                className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-center text-white gradient-bg"
               >
                 Get Started
               </Link>
